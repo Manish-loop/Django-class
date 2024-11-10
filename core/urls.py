@@ -15,14 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from home.views import test, json_test,temp_render ,home_render # home folder ko views.py file ko test function lai import garne 
+from teacher.views import teacher
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("broadway/",test),
-    path("json-response",json_test),
-    path("temp",temp_render),  
-    path('home',home_render),   
+    # path("broadway/",test),
+    # path("json-response",json_test),
+    # path("temp",temp_render),  
+    path('home/',include('home.urls')),
+    path('teacher/',include('teacher.urls'))
 ]
 
