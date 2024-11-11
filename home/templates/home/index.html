@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample HTML Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>{% block title %} Home page {% endblock %}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,12 +45,19 @@
 
 <header>
     <h1>Welcome to {{request.user}}</h1>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
 </header>
 
 <section>
+    {% block content %}
     <h1>About This Page</h1>
     <p>This is a simple HTML page created as an example. You can customize the content and layout to suit your needs. It includes a header, a content section, and a footer.</p>
     <p>{{test}}</p>
+    {% endblock %}
 </section>
 
 <footer>
@@ -57,4 +65,7 @@
 </footer>
 
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </html>

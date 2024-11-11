@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'teacher',
+    'user',
 ]
+
+LOGIN_URL = '/user/login'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

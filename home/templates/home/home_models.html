@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    {{home}}
+    <a href="{% url 'user-logout' %}" class="btn btn-danger">Logout</a>
+
+    {% comment %} {{home}} {% endcomment %}
 
 <div class="container mt-5">
     <h2>Names and Phone</h2>

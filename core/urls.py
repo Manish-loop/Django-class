@@ -25,6 +25,7 @@ urlpatterns = [
     # path("json-response",json_test),
     # path("temp",temp_render),  
     path('home/',include('home.urls')),
-    path('teacher/',include('teacher.urls'))
+    path('teacher/',include('teacher.urls')),
+    path('user/',include('user.urls')),
 ]
 

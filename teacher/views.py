@@ -1,11 +1,12 @@
 from django.shortcuts import redirect, render
 from teacher.models import SchoolClass, Teacher
 from teacher.forms import TeacherForm, ClassForm
-
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 
 # Create your views here.
 
-# @login_required(login_urls='/admin/login',)
+@login_required(login_url='/admin/login',)
 
 def teacher(request):
     # data = Teacher.objects.filter(is_active=True)
@@ -18,8 +19,10 @@ def teacher(request):
 
 
 def teacher_create(request):
+    if not request.user.is_authenticated:
+        return HttpResponse("User is not login")
     if request.method =="POST":
-        print(request.POST)
+        print("======?",request.POST)
         Teacher.objects.create(
             name = request.POST['name'],
             address = request.POST['address'],
@@ -71,7 +74,7 @@ def delete_teacher(request,id):
 def list_class(request):
     data = SchoolClass.objects.all()
     context = {
-        "data": data
+        "data": data 
     }
     return render(request,'schoolclass/index.html',context)
 

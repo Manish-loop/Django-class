@@ -7,4 +7,5 @@ urlpatterns = [
     path('broadway',test),
     path('json-response',json_test),
     path('temp',temp_render),
+    path('user_logout',user_logout,name="user-logout"),
 ]

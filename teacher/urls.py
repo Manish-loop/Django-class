@@ -11,6 +11,7 @@ urlpatterns = [
     
     # class url
     path('class',list_class,name="list_of_class"),
+    path('class-create',create_class, name="create-class")
 ]
 
 # school_url = [
