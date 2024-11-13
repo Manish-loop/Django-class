@@ -3,10 +3,12 @@ from teacher.models import SchoolClass, Teacher
 from teacher.forms import TeacherForm, ClassForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+
 
 # Create your views here.
 
-@login_required(login_url='/admin/login',)
+@login_required(login_url='/admin/login')
 
 def teacher(request):
     # data = Teacher.objects.filter(is_active=True)
@@ -16,7 +18,7 @@ def teacher(request):
     }
     return render(request,'teacher/index.html',data_dict)
 
-
+@login_required(login_url='/admin/login')
 
 def teacher_create(request):
     if not request.user.is_authenticated:
@@ -37,6 +39,7 @@ def teacher_create(request):
         return redirect('teacher/test')
     return render(request,'teacher/create.html')
 
+@login_required(login_url='/admin/login')
 
 def modelform(request):
     form = TeacherForm()
@@ -50,6 +53,8 @@ def modelform(request):
         "form":form
     }
     return render(request,'teacher/modelform.html',data_dict)
+
+@login_required(login_url='/admin/login')
 
 def teacher_update(request,id):
     data = Teacher.object.get(id=id)
@@ -65,6 +70,7 @@ def teacher_update(request,id):
     }
     return render(request,'teacher/modelform.html',data_dict)
 
+@login_required(login_url='/admin/login')
 
 def delete_teacher(request,id):
     data = Teacher.objects.get(id=id).delete()
@@ -81,7 +87,7 @@ def list_class(request):
 def create_class(request):
     form = ClassForm()
     if request.method == 'POST':
-        form = ClassForm(request.POST)
+        form = ClassForm(request.POST) 
         if form.is_valid():
             form.save()
             return redirect('/teacher/class')
@@ -91,6 +97,28 @@ def create_class(request):
     }
     return render(request,'schoolclass/create.html',content)
 
+class TeacherView(ListView):
+    model = Teacher
+    queryset = Teacher.objects.filter(is_active = False)
+    template_name = 'teacher/teacher.html'
+    context_object_name = 'teacher'
+    
+class TeacherCreate(CreateView):
+    model = Teacher
+    fields= '__all__'
+    success_url = '/'
 
+class UpdateTeacher(UpdateView):
+    model = Teacher
+    fields = '__all__'
+    success_url = '/'
 
-
+class DeleteTeacher(DeleteView):
+    model = Teacher
+    fields = '__all__'
+    success_url = '/'
+    
+class DetailTeacher(DetailView):
+    model = Teacher
+    fields = '__all__'
+    

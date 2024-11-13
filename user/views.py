@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
-from user.forms import LoginForm, RegisterForm
+from user.forms import LoginForm, RegisterForm, ChangePasswordForm
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 # Create your views here.
 
 
@@ -36,3 +38,32 @@ def user_register(request):
         "form":form
     }
     return render(request, 'user/register.html', context)
+
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+
+@login_required()
+
+def change_password(request):
+    form = ChangePasswordForm()
+    if request.method == "POST":
+        form = ChangePasswordForm(request.POST)
+        if form.is_valid():
+            old_password = request.POST('old_password')
+            new_password = request.POST('new_password')
+            confirm_password = request.POST('confirm_password')
+            user = request.user
+            if not user.check_password(old_password):
+                return HttpResponse("old password does not match")
+            
+            elif new_password != confirm_password:
+                return HttpResponse("new password do not match")
+            
+            #compare old password and new password should not match
+            user.set_password(new_password)
+            user.save() 
+            return redirect('/home')
+
+    context = {
+        "form": form
+    }
+    return render(request, 'user/change_password.html', context)

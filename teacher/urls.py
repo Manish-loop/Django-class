@@ -1,3 +1,4 @@
+from winreg import CreateKey
 from django.urls import path
 # from teacher.views import delete_teacher, list_class, teacher,teacher_create,modelform,teacher_update
 from teacher.views import *
@@ -11,8 +12,8 @@ urlpatterns = [
     
     # class url
     path('class',list_class,name="list_of_class"),
-    path('class-create',create_class, name="create-class")
-]
+    path('class-create',create_class, name="create-class"),
+
 
 # school_url = [
 
@@ -22,3 +23,9 @@ urlpatterns = [
 
 # /teacher/test/hello/class/math <==> teacher-model-create
 
+## class based url
+path('classbased/teacher',TeacherView.as_view(), name="classed-teacher"),
+path('classbased/create',TeacherCreate.as_view(), name="classed-teacher"),
+path('classbased/update/<pk>',UpdateTeacher.as_view(), name="classed-teacher"),
+
+]
