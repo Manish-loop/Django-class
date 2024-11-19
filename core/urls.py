@@ -27,5 +27,17 @@ urlpatterns = [
     path('home/',include('home.urls')),
     path('teacher/',include('teacher.urls')),
     path('user/',include('user.urls')),
+    
 ]
 
+
+apiurls=[
+    path('api/teacher', include('teacher.api.urls'))
+]
+
+# apiurls=[
+#     path('api/user/',include('user.api.urls'))
+# ]
+
+# urlpatterns= urlpatterns+apiurls
+# urlpatterns.extend(apiurls).another.option

@@ -40,10 +40,11 @@ INSTALLED_APPS = [
     'home',
     'teacher',
     'user',
+    'rest_framework',
 ]
 
 LOGIN_URL = '/user/login'
-
+from django.middleware.security import SecurityMiddleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -74,6 +75,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -92,6 +98,7 @@ DATABASES = {
 #         'ENGINE': 'django.db.backends.mysql',
 #         'NAME': 'djangosep',
 #         'USER': 'root',
+#         'PASSWORD':'',
 #         'HOST': 'localhost',
 #         'PORT': '3306',
 #     }

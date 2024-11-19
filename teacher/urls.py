@@ -29,3 +29,5 @@ path('classbased/create',TeacherCreate.as_view(), name="classed-teacher"),
 path('classbased/update/<pk>',UpdateTeacher.as_view(), name="classed-teacher"),
 
 ]
+
+# /teacher/test/hello/class/math/exam

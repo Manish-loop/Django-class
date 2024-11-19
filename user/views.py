@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from user.forms import LoginForm, RegisterForm, ChangePasswordForm
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 # Create your views here.
 
 
@@ -42,19 +42,17 @@ def user_register(request):
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 @login_required()
-
 def change_password(request):
     form = ChangePasswordForm()
     if request.method == "POST":
         form = ChangePasswordForm(request.POST)
         if form.is_valid():
-            old_password = request.POST('old_password')
-            new_password = request.POST('new_password')
-            confirm_password = request.POST('confirm_password')
+            old_password = request.POST['old_password']
+            new_password = request.POST['new_password']
+            confirm_password = request.POST['confirm_password']
             user = request.user
             if not user.check_password(old_password):
                 return HttpResponse("old password does not match")
-            
             elif new_password != confirm_password:
                 return HttpResponse("new password do not match")
             
@@ -67,3 +65,16 @@ def change_password(request):
         "form": form
     }
     return render(request, 'user/change_password.html', context)
+
+
+def user_list(request):
+    user = User.objects.all()
+    result = []
+    for data in user:
+        result.append(
+            {
+                "name":data.username,
+                "email":data.email
+            }
+        )
+        return JsonResponse(result, safe=False)

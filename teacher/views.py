@@ -4,7 +4,7 @@ from teacher.forms import TeacherForm, ClassForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -121,4 +121,7 @@ class DeleteTeacher(DeleteView):
 class DetailTeacher(DetailView):
     model = Teacher
     fields = '__all__'
+    
+def user_list(request):
+    user = User.objects.all().first()
     
