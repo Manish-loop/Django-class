@@ -14,6 +14,12 @@ urlpatterns = [
     path('class',list_class,name="list_of_class"),
     path('class-create',create_class, name="create-class"),
 
+## class based url
+path('classbased/teacher',TeacherView.as_view(), name="classed-teacher"),
+path('classbased/create',TeacherCreate.as_view(), name="classed-teacher"),
+path('classbased/update/<pk>',UpdateTeacher.as_view(), name="classed-teacher"),
+
+]
 
 # school_url = [
 
@@ -22,12 +28,5 @@ urlpatterns = [
 # urlpatterns = school_url+teacher_url
 
 # /teacher/test/hello/class/math <==> teacher-model-create
-
-## class based url
-path('classbased/teacher',TeacherView.as_view(), name="classed-teacher"),
-path('classbased/create',TeacherCreate.as_view(), name="classed-teacher"),
-path('classbased/update/<pk>',UpdateTeacher.as_view(), name="classed-teacher"),
-
-]
 
 # /teacher/test/hello/class/math/exam

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'home',
     'teacher',
     'user',
+    'activity',
     'rest_framework',
 ]
 
@@ -78,7 +79,15 @@ WSGI_APPLICATION = 'core.wsgi.application'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    # 'DEFAULT_THROTTLE_CLASSES': [
+    #     'rest_framework.throttling.AnnoRateThrottle',
+    #     'rest_framework.throttling.UserRateThrottle'
+    # ],
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'anon': '1/day',
+    #     'user': '3/day'
+    # }
 }
 
 # Database

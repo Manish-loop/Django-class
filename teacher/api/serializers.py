@@ -7,10 +7,29 @@ from rest_framework import serializers
 from teacher.models import Teacher
 
 class TeacherSerializer(serializers.ModelSerializer):
+    # name = serializers.IntegerField()
     class Meta:
         model = Teacher
         fields = '__all__'
+        # # exclude = ['name']
         # fields = [
         #     'id',
         #     'name'
         # ]
+        
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['class']="python django"
+        data['name_id']=data['name'] + str(data['id'])
+        data.pop('salary')
+        data['teacher_email'] = data.pop('email')
+        return data
+    
+    # def to_representation(self, instance):
+    #     return {
+    #         "name":instance.name,
+    #         "teacher":instance.email
+    #     }    
+    #  This should process should not be used 
+    
+    

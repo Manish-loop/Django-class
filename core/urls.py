@@ -16,14 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from home.views import test, json_test,temp_render ,home_render # home folder ko views.py file ko test function lai import garne 
-from teacher.views import teacher
+# from home.views import test, json_test,temp_render ,home_render # home folder ko views.py file ko test function lai import garne 
+# from teacher.views import teacher
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    # path("broadway/",test),
-    # path("json-response",json_test),
-    # path("temp",temp_render),  
+    path('admin/', admin.site.urls), 
     path('home/',include('home.urls')),
     path('teacher/',include('teacher.urls')),
     path('user/',include('user.urls')),
@@ -31,13 +33,17 @@ urlpatterns = [
 ]
 
 
-apiurls=[
-    path('api/teacher', include('teacher.api.urls'))
-]
-
 # apiurls=[
-#     path('api/user/',include('user.api.urls'))
+#     path('api/teacher', include('teacher.api.urls'))
 # ]
 
-# urlpatterns= urlpatterns+apiurls
-# urlpatterns.extend(apiurls).another.option
+apiurls=[
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  
+    path('api/user/', include('user.api.urls')), 
+    path('api/teacher/', include('teacher.api.urls'))
+]
+
+
+urlpatterns= urlpatterns+apiurls
+# urlpatterns.extend(apiurls) another option
