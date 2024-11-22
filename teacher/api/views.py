@@ -49,4 +49,4 @@ def teacher_delete(request,id):
     teacher.delete()
     return Response({
         "message":"Deleted successfully"
-    },status.HTTP_204_NO_CONTENT)
+    },status.HTTP_204_NO_CONTENT) 

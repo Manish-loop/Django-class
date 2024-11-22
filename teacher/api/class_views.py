@@ -1,9 +1,14 @@
 from rest_framework.views import APIView
-from teacher.models import Teacher
-from teacher.api.serializers import TeacherSerializer
+from teacher.models import Teacher, SchoolClass
+from teacher.api.serializers import TeacherSerializer, SchoolClassSerializer
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.throttling import UserRateThrottle
 
+# Vuew = custom kaam haru so yo use gardainau
+# APIView = custom kaam + extra aru kaam haru
+# GenericView = APIView ko kaam + extra 
 
 class TeacherView(APIView):
 
@@ -26,9 +31,10 @@ class TeacherView(APIView):
 
 class TeacherUpdateAndDelete(APIView):
     def put(id):
-        teacher = Teacher.objects.all() 
-        serializer = TeacherSerializer(teacher, many=True)
-        return Response(serializer.data)
+        pass
+        # teacher = Teacher.objects.all() 
+        # serializer = TeacherSerializer(teacher, many=True)
+        # return Response(serializer.data)
     
     def delete(id):
         pass
@@ -40,4 +46,4 @@ class SchoolClassView(APIView):
     def get(self,request):
         data = SchoolClass.objects.all()
         serializer = SchoolClassSerializer(data, many=True)
-        return Response(serializer)
+        return Response(serializer.data, status.HTTP_200_OK)

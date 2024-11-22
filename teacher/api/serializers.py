@@ -4,14 +4,13 @@
 # Meta is used to overwrite class Here in below it overwrites TeacherSerializer
 
 from rest_framework import serializers
-from teacher.models import Teacher
+from teacher.models import Teacher, SchoolClass
 
 class TeacherSerializer(serializers.ModelSerializer):
     # name = serializers.IntegerField()
     class Meta:
         model = Teacher
         fields = '__all__'
-        # # exclude = ['name']
         # fields = [
         #     'id',
         #     'name'
@@ -32,4 +31,8 @@ class TeacherSerializer(serializers.ModelSerializer):
     #     }    
     #  This should process should not be used 
     
-    
+class SchoolClassSerializer(serializers.ModelSerializer):
+    teacher = TeacherSerializer(many=True)
+    class Meta:
+        model = SchoolClass
+        fields = "__all__"
