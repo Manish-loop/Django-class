@@ -5,6 +5,8 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+from user.api.services import UserServices
+
 
 @api_view(['GET'])
 def user_info(request):
@@ -22,6 +24,9 @@ def user_login(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             serializer_data = UserSerializer(user)
+            print(request.META)
+            UserServices.create_user_activity(request,user)
+            
             return Response(serializer_data.data)
         return Response({
             "error":"Password does not match"
