@@ -7,7 +7,7 @@ class UserActivity(models.Model):
     user_agent = models.CharField(max_length=100, null=True, blank=True)
     ip_address = models.CharField(max_length=30, null=True, blank=True)
     location = models.CharField(max_length=200, null=True, blank=True)
-    created_time = models.DateTimeField(auto_created=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     modules = models.CharField(max_length=20, null=True, blank=True)
     
     def __str__(self):

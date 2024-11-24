@@ -6,7 +6,7 @@ from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from user.api.services import UserServices
-
+from ipware import get_client_ip
 
 @api_view(['GET'])
 def user_info(request):
@@ -24,8 +24,13 @@ def user_login(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             serializer_data = UserSerializer(user)
-            print(request.META)
-            UserServices.create_user_activity(request,user)
+            UserServices.create_user_activity(
+                request,
+                user = user,
+                ip_address = get_client_ip(request)[0],
+                modules = "Login",
+                user_agent = request.META.get('HTTP_USER_AGENT',None)
+                )
             
             return Response(serializer_data.data)
         return Response({
@@ -33,6 +38,8 @@ def user_login(request):
         })
     return Response(serializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
 
+
+# # register api
 # @api_view(['POST'])
 # def user_register(request):
 #         serializer = RegisterSerializer(data=request.data)
