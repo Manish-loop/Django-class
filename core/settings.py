@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
+import sentry_sdk
+from dotenv import load_dotenv
+import os  # for directly calling files
+load_dotenv()  # take environment variables from .env. #load_dotenv is called so data starts coming from .env which is environment variables
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,6 +30,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# if DEBUG = False 
+# data is needed to be provided in ALLOWED_HOSTS=[] for eg:ALLOWED_HOSTS=['https://test.com'] so  system runs with test.com only when debug is False 
+# ALLOWED_HOSTS=['*'] to run on all on any host * is used and when DEBUG=False, it does not show error that occur at any line
 
 # Application definition
 
@@ -56,6 +62,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_PORT=587
+EMAIL_HOST_USER="dhekemanis@gmail.com"
+EMAIL_HOST_PASSWORD="pgcu krci vjxa smvo"
+EMAIL_USE_TLS=True
+
+
+
 ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
@@ -74,6 +88,18 @@ TEMPLATES = [
     },
 ]
 
+sentry_sdk.init(
+    dsn=os.getenv('SENETRY_DSN'),
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for tracing.
+    traces_sample_rate=1.0,
+    _experiments={
+        # Set continuous_profiling_auto_start to True
+        # to automatically start the profiler on when
+        # possible.
+        "continuous_profiling_auto_start": True,
+    },
+)
 WSGI_APPLICATION = 'core.wsgi.application'
 
 REST_FRAMEWORK = {
@@ -132,8 +158,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -155,3 +179,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+

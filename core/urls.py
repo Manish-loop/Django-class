@@ -51,3 +51,5 @@ apiurls=[
 
 urlpatterns= urlpatterns+apiurls
 # urlpatterns.extend(apiurls) another option
+
+

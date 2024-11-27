@@ -2,3 +2,5 @@ venv
 test.md
 db.sqlite3
 id_rsa.pub
+.env
+

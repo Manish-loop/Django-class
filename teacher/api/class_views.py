@@ -1,3 +1,4 @@
+import django_filters
 from rest_framework.views import APIView
 from teacher.models import Teacher, SchoolClass
 from teacher.api.serializers import TeacherSerializer, SchoolClassSerializer
@@ -5,8 +6,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
-
-# Vuew = custom kaam haru so yo use gardainau
+from rest_framework.generics import GenericAPIView
+# View = custom kaam haru so yo use gardainau
 # APIView = custom kaam + extra aru kaam haru
 # GenericView = APIView ko kaam + extra 
 
@@ -39,11 +40,24 @@ class TeacherUpdateAndDelete(APIView):
     def delete(id):
         pass
     
-class SchoolClassView(APIView):
+# class SchoolClassView(APIView):
+#     permission_classes = [IsAuthenticated]
+#     throttle_classes = [UserRateThrottle]
+    
+#     def get(self,request):
+#         data = SchoolClass.objects.all()
+#         serializer = SchoolClassSerializer(data, many=True)
+#         return Response(serializer.data, status.HTTP_200_OK)
+    
+    
+class SchoolClassView(GenericAPIView):
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
+    serializer_class = SchoolClassSerializer
+    queryset = SchoolClass.objects.filter()
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     
     def get(self,request):
-        data = SchoolClass.objects.all()
-        serializer = SchoolClassSerializer(data, many=True)
+        data = self.get_queryset()
+        serializer = self.get_serializer(data, many=True)
         return Response(serializer.data, status.HTTP_200_OK)

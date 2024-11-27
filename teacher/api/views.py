@@ -7,6 +7,10 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from django.core.mail import send_mail
+from django.conf import settings
+
+EMAIL_HOST_USER = settings.EMAIL_HOST_USER
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -50,3 +54,12 @@ def teacher_delete(request,id):
     return Response({
         "message":"Deleted successfully"
     },status.HTTP_204_NO_CONTENT) 
+    
+    
+def message(request):
+    send_mail(
+        "Test x in Python",
+        "Might be working now!",
+        EMAIL_HOST_USER,
+        [EMAIL_HOST_USER],
+    )
