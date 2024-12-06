@@ -7,6 +7,8 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.generics import GenericAPIView
+from .filter_set import SchoolFilters
+
 # View = custom kaam haru so yo use gardainau
 # APIView = custom kaam + extra aru kaam haru
 # GenericView = APIView ko kaam + extra 
@@ -51,13 +53,27 @@ class TeacherUpdateAndDelete(APIView):
     
     
 class SchoolClassView(GenericAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
     serializer_class = SchoolClassSerializer
-    queryset = SchoolClass.objects.filter()
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    queryset = SchoolClass.objects.all()
+    filterset_fields = ['is_active']
     
     def get(self,request):
+        data = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(data, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
+    
+    
+class SerchClassView(GenericAPIView):
+    queryset = SchoolClass.objects.all()
+    serializer_class = SchoolClassSerializer
+    throttle_classes = [UserRateThrottle]
+
+    def get(self, request):
+        print(request.GET)
         data = self.get_queryset()
+        if request.GET.get('search'):
+            data = SchoolClass.objects.filter(name__icontains=request.GET.get('search'))
         serializer = self.get_serializer(data, many=True)
         return Response(serializer.data, status.HTTP_200_OK)

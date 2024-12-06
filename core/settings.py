@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'user',
     'activity',
     'rest_framework',
+    'django_filters'
 ]
 
 LOGIN_URL = '/user/login'

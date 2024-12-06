@@ -11,7 +11,9 @@
         <h1>Create Teacher</h1>
         <form method="POST">
             {% csrf_token %}
-            {{form}}
+            {% comment %} csrf token is used to prevent unauthorized actions {% endcomment %}
+            {{form}} 
+{% comment %} yesma {{form}} key vakue ho form bhaneko junchai views.py bata aayeko ho  {% endcomment %}
 
             <button type="submit" class="btn btn-primary">Create Teacher</button>
         </form>
