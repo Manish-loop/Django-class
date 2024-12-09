@@ -9,7 +9,7 @@
 <body>
     <div class="container mt-5">
         <h2>Login</h2>
-        <form method="post">
+        <form method="post">  
             {% csrf_token %}
             {{form.as_p}}
             <button type="submit" class="btn btn-primary">Login</button>
@@ -18,3 +18,8 @@
 
 </body>
 </html>
+
+
+{#   <form method="post">  yesma api hit haneko cha juncha post method ho #}
+<!-- form = LoginForm()  ma LoginForm ko form lai form.as_p garne ho  -->
+<!-- yesma each form field convert garcha HTML<label> ma ani associated <input> enclosed in <p> tag -->

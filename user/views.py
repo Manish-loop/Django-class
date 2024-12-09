@@ -11,19 +11,28 @@ def user_login(request):
     if request.user.is_authenticated:
         return redirect('/home')
     form = LoginForm()
-    if request.method == "POST":
+    if request.method == "POST":  # handling post method yesko lagi <form method="post">
         form = LoginForm(request.POST)
         if form.is_valid():
-            username = request.POST.get('username') # username chaina bhane none pathaucha
+            # username = request.POST['username'] # data dictionary ma aaucha,username dictionary form ma huncha 
+            username = request.POST.get('username') # username chaina bhane none pathaucha for eg: uernams aauda none pathaucha
             password = request.POST.get('password') # dictionary ko get
             user = authenticate(username=username, password=password) # authenticate le raw password lai change garcha hashing ma
             if user is not None:
                 login(request, user)
-            return redirect('/home')
+                return redirect('/home')
     context = {
         "form":form
     }
     return render(request, 'user/login.html', context)
+
+# username = request.POST['username'] yesma key chayo bhanera bujcha, yesma ['username'] nabhayera ['usernamm'] bhayo bhane error dincha usernamm bhnae field chaena bhanera
+# username = request.POST.get('username') .get le yesma bhitra bhako username cha ki chaena check garcha
+
+# login bhane function na banau kina bhane django sanga affai login vanne function cha 
+# ra same bhayo bhanne map huncha ani recursion use gareko jasto huncha override vayera so hyaha mathi user_login function use gareko ho
+
+# if request.method == "POST": yo condition chai username, password diyea pachi login button click garda LoginForm ma request.POST aaucha ra yo form valid ch ki chaine check garcha
 
 def user_register(request):
     form = RegisterForm()
