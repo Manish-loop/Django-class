@@ -44,21 +44,21 @@ class LoginSerializer(serializers.Serializer):
     def validate_password(self,password):
         return password
     
-# class RegisterSerializer(serializers.ModelSerializer):
-#     password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
 
-#     class Meta:
-#         model = User
-#         fields = ['username', 'password']
+    class Meta:
+        model = User
+        fields = ['username', 'password']
 
-#     def validate(self, data):
-#         username = data.get('username')
-#         password = data.get('password')
+    def validate(self, data):
+        username = data.get('username')
+        password = data.get('password')
 
-#         # Check if username and password are the same
-#         if username and password and username == password:
-#             raise serializers.ValidationError(
-#                 {"password": "Password cannot be the same as the username."}
-#             )
+        # Check if username and password are the same
+        if username and password and username == password:
+            raise serializers.ValidationError(
+                {"password": "Password cannot be the same as the username."}
+            )
 
-#         return data
+        return data

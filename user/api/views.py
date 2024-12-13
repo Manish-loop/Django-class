@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from user.api.serializers import UserSerializer, LoginSerializer
+from user.api.serializers import UserSerializer, LoginSerializer, RegisterSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -64,7 +64,17 @@ def user_login(request):
 
 
 # try register api 
-
+# Register api is made for registering user data
+# register api
+@api_view(['POST'])
+def user_register(request):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            return Response(
+                {"message": "User registered successfully!", "user": serializer.data},
+                status=status.HTTP_201_CREATED
+            )
 
 
 
@@ -150,13 +160,3 @@ def user_login(request):
 #     return Response(serializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
-# # # register api
-# # @api_view(['POST'])
-# # def user_register(request):
-# #         serializer = RegisterSerializer(data=request.data)
-# #         if serializer.is_valid():
-# #             user = serializer.save()
-# #             return Response(
-# #                 {"message": "User registered successfully!", "user": serializer.data},
-# #                 status=status.HTTP_201_CREATED
-# #             )
